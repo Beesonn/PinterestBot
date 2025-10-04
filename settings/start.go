@@ -16,7 +16,7 @@ func Start(b *gotgbot.Bot, ctx *ext.Context) error {
 	buttons := gotgbot.InlineKeyboardMarkup{
 		InlineKeyboard: [][]gotgbot.InlineKeyboardButton{
 			{
-				{Text: "Source", Url: "https://github.com/Mishel-07/PinterestBot"},
+				{Text: "Source", Url: "https://github.com/Beesonn/PinterestBot"},
 			},
 			{
 				{Text: "Support", Url: "https://t.me/XBOTSUPPORTS"},
