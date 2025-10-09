@@ -2,17 +2,17 @@ package pinterest
 
 import (
 	"fmt"
-	"regexp"
-	"strings"	
+	"github.com/Mishel-07/PinterestBot/settings"
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
-	"github.com/Mishel-07/PinterestBot/settings"
+	"regexp"
+	"strings"
 )
 
 func ExtractURL(message string) string {
-        pattern := regexp.MustCompile(`https?://\S+`)
+	pattern := regexp.MustCompile(`https?://\S+`)
 	match := pattern.FindString(message)
-        return match
+	return match
 }
 
 func DownloadSend(b *gotgbot.Bot, ctx *ext.Context) error {
@@ -32,12 +32,12 @@ func DownloadSend(b *gotgbot.Bot, ctx *ext.Context) error {
 	link := ExtractURL(chk)
 	url, err := settings.PinterestDownload(link)
 	fmt.Println(url)
-        if err != nil {	
-	       message.Reply(b, "opps! An Error Occured Report on @XBOTSUPPORTS", &gotgbot.SendMessageOpts{})
-               fmt.Println(err)
-	       return err
-        }
-	photo := gotgbot.InputMediaPhoto{			
+	if err != nil {
+		message.Reply(b, "opps! An Error Occured Report on @XBOTSUPPORTS", &gotgbot.SendMessageOpts{})
+		fmt.Println(err)
+		return err
+	}
+	photo := gotgbot.InputMediaPhoto{
 		Media: gotgbot.InputFileByURL(url),
 	}
 	_, uploadErr := b.SendPhoto(ctx.EffectiveChat.Id, photo.Media, &gotgbot.SendPhotoOpts{})
