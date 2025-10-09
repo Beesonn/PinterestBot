@@ -38,7 +38,7 @@ func DownloadPinterestImage(URL string) (string, error) {
 		doc.Find("img").EachWithBreak(func(i int, s *goquery.Selection) bool {
 			if src, exists := s.Attr("src"); exists && strings.HasPrefix(src, "https://i.pinimg.com/") {
 				imageURL = src
-				return false // break
+				return false 
 			}
 			return true
 		})
