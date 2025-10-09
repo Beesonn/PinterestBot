@@ -1,30 +1,59 @@
-package settings
+package settings 
 
 import (
-	"encoding/json"
-	"io/ioutil"
+	"fmt"
+	"log"
 	"net/http"
+	"strings"
+
+	"github.com/PuerkitoBio/goquery"
 )
 
-func PinterestDownload(link string) (string, error) {
-	url := "https://horridapi.onrender.com/download_pin?url=" + link
-	resp, err := http.Get(url)
+func DownloadPinterestImage(URL string) (string, error) {
+	resp, err := http.Get(URL)
 	if err != nil {
 		return "", err
 	}
 	defer resp.Body.Close()
 
-	body, err := ioutil.ReadAll(resp.Body)
+	if resp.StatusCode != 200 {
+		return "", fmt.Errorf("failed to fetch page, status code: %d", resp.StatusCode)
+	}
+	
+	doc, err := goquery.NewDocumentFromReader(resp.Body)
 	if err != nil {
 		return "", err
+	}
+	
+	var imageURL string
+	doc.Find("img.h-image-fit, img.h-unsplash-img").EachWithBreak(func(i int, s *goquery.Selection) bool {
+		if src, exists := s.Attr("src"); exists {
+			imageURL = src
+			return false // break
+		}
+		return true
+	})
+
+	if imageURL == "" {
+		doc.Find("img").EachWithBreak(func(i int, s *goquery.Selection) bool {
+			if src, exists := s.Attr("src"); exists && strings.HasPrefix(src, "https://i.pinimg.com/") {
+				imageURL = src
+				return false // break
+			}
+			return true
+		})
 	}
 
-	var data struct {
-		Link string `json:"link"`
+	if imageURL == "" {
+		return "", fmt.Errorf("no image found")
 	}
-	err = json.Unmarshal(body, &data)
-	if err != nil {
-		return "", err
+	
+	parts := strings.Split(imageURL, "x/")
+	if len(parts) < 2 {
+		return imageURL, nil 
 	}
-	return data.Link, nil
+	secondPart := parts[1]
+	newURL := "https://i.pinimg.com/1200x/" + secondPart
+
+	return newURL, nil
 }
