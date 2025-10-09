@@ -1,12 +1,13 @@
 package pinterest
 
 import (
-	"fmt"
+	"fmt"	
+	"regexp"
+	"strings"
+
 	"github.com/Mishel-07/PinterestBot/settings"
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
-	"regexp"
-	"strings"
 )
 
 func ExtractURL(message string) string {
