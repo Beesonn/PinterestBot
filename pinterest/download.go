@@ -31,7 +31,7 @@ func DownloadSend(b *gotgbot.Bot, ctx *ext.Context) error {
 	}
 
 	link := ExtractURL(chk)
-	url, err := settings.PinterestDownload(link)
+	url, err := settings.DownloadPinterestImage(link)
 	fmt.Println(url)
 	if err != nil {
 		message.Reply(b, "opps! An Error Occured Report on @XBOTSUPPORTS", &gotgbot.SendMessageOpts{})
