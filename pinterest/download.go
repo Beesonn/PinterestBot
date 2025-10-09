@@ -1,7 +1,6 @@
 package pinterest
 
 import (
-	"fmt"	
 	"regexp"
 	"strings"
 
