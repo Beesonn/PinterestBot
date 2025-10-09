@@ -29,7 +29,7 @@ func DownloadPinterestImage(URL string) (string, error) {
 	doc.Find("img.h-image-fit, img.h-unsplash-img").EachWithBreak(func(i int, s *goquery.Selection) bool {
 		if src, exists := s.Attr("src"); exists {
 			imageURL = src
-			return false // break
+			return false 
 		}
 		return true
 	})
