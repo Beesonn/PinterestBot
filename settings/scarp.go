@@ -1,7 +1,7 @@
-package settings 
+package settings
 
 import (
-	"fmt"	
+	"fmt"
 	"math/rand"
 	"net/http"
 	"strconv"
@@ -12,7 +12,7 @@ import (
 
 func ScrapWallpapers(query string) []string {
 	imagesData := make([]string, 0)
-	url := "https://wallpapers.com/search/" + query	
+	url := "https://wallpapers.com/search/" + query
 	response, err := http.Get(url)
 	if err != nil {
 		fmt.Println("Error fetching the URL:", err)
@@ -29,7 +29,7 @@ func ScrapWallpapers(query string) []string {
 	totalPages := 1
 	pageCounter := doc.Find(".page-counter.mobi")
 	if len(pageCounter.Nodes) > 0 {
-		totalPages, _ = strconv.Atoi(strings.Fields(pageCounter.Text())[len(strings.Fields(pageCounter.Text())) - 1])
+		totalPages, _ = strconv.Atoi(strings.Fields(pageCounter.Text())[len(strings.Fields(pageCounter.Text()))-1])
 	}
 
 	page := rand.Intn(totalPages) + 1
@@ -52,7 +52,7 @@ func ScrapWallpapers(query string) []string {
 		imgTag := s.Find("img")
 		imgURL := imgTag.AttrOr("data-src", "")
 		if imgURL != "" {
-			imageURL := strings.Join(strings.Split("https://wallpapers.com/", "/")[:len(strings.Split(pageURL, "/")) - 1], "/") + imgURL			
+			imageURL := strings.Join(strings.Split("https://wallpapers.com/", "/")[:len(strings.Split(pageURL, "/"))-1], "/") + imgURL
 			imagesData = append(imagesData, imageURL)
 		}
 	})
