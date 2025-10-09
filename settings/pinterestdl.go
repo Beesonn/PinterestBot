@@ -2,7 +2,6 @@ package settings
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 	"strings"
 
