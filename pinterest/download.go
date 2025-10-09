@@ -32,18 +32,16 @@ func DownloadSend(b *gotgbot.Bot, ctx *ext.Context) error {
 
 	link := ExtractURL(chk)
 	url, err := settings.DownloadPinterestImage(link)
-	fmt.Println(url)
 	if err != nil {
-		message.Reply(b, "opps! An Error Occured Report on @XBOTSUPPORTS", &gotgbot.SendMessageOpts{})
-		fmt.Println(err)
+		message.Reply(b, "opps! An Error Occured Report on @XBOTSUPPORTS", nil)		
 		return err
 	}
 	photo := gotgbot.InputMediaPhoto{
 		Media: gotgbot.InputFileByURL(url),
 	}
-	_, uploadErr := b.SendPhoto(ctx.EffectiveChat.Id, photo.Media, &gotgbot.SendPhotoOpts{})
+	_, uploadErr := b.SendPhoto(ctx.EffectiveChat.Id, photo.Media, &gotgbot.SendPhotoOpts{ReplyParameters: &gotgbot.ReplyParameters{MessageId: message.MessageId},})
 	if uploadErr != nil {
-		message.Reply(b, "Failed to Send Photo", &gotgbot.SendMessageOpts{})
+		message.Reply(b, "Failed to Send Photo", nil)
 		return err
 	}
 	return nil
