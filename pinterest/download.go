@@ -16,10 +16,7 @@ func ExtractURL(message string) string {
 }
 
 func DownloadSend(b *gotgbot.Bot, ctx *ext.Context) error {
-	message := ctx.EffectiveMessage
-	if message.Chat.Type != "private" {
-		return nil
-	}
+	message := ctx.EffectiveMessage	
 	chk := message.Text
 	if strings.HasPrefix(chk, "/") {
 		return nil
