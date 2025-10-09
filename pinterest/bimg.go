@@ -19,7 +19,7 @@ func BingImgCmd(b *gotgbot.Bot, ctx *ext.Context) error {
 
         query := split[1]
         msg, fck := message.Reply(b, "<b>Searching...🔎</b>", &gotgbot.SendMessageOpts{ParseMode: gotgbot.ParseModeHTML})
-	if fck != nil {
+    	if fck != nil {
 		return nil
         }       
         urls, err := settings.SearchBing(query, 8)
