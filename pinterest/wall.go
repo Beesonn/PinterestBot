@@ -4,13 +4,13 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/Mishel-07/PinterestBot/settings"
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
-	"github.com/Mishel-07/PinterestBot/settings"
 )
 
 func WallSearch(b *gotgbot.Bot, ctx *ext.Context) error {
-	message := ctx.Message	
+	message := ctx.Message
 	split := strings.SplitN(message.GetText(), " ", 2)
 	if len(split) < 2 {
 		message.Reply(b, "<b>No Query Provided So I can't send Photo, so Please Provide Query</b>", &gotgbot.SendMessageOpts{ParseMode: gotgbot.ParseModeHTML})
@@ -27,7 +27,7 @@ func WallSearch(b *gotgbot.Bot, ctx *ext.Context) error {
 
 	media := make([]gotgbot.InputMedia, 0)
 	count := 0
-	for _, item := range images {	
+	for _, item := range images {
 		if count == 10 {
 			break
 		}
@@ -44,15 +44,14 @@ func WallSearch(b *gotgbot.Bot, ctx *ext.Context) error {
 	}
 
 	b.SendMediaGroup(
-                message.Chat.Id,
-                media,	
-                &gotgbot.SendMediaGroupOpts{
-	                ReplyParameters: &gotgbot.ReplyParameters{					
-		                MessageId: message.MessageId,
-			
-		        },
-	        },
-        )
+		message.Chat.Id,
+		media,
+		&gotgbot.SendMediaGroupOpts{
+			ReplyParameters: &gotgbot.ReplyParameters{
+				MessageId: message.MessageId,
+			},
+		},
+	)
 	b.DeleteMessage(msg.Chat.Id, msg.MessageId, &gotgbot.DeleteMessageOpts{})
 
 	return nil
