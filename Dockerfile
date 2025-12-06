@@ -1,9 +1,3 @@
-FROM golang:1.22-bullseye
+FROM alpine
 
-RUN mkdir /bot
-WORKDIR /bot
-RUN cd /bot
-COPY . .
-RUN go build .
-
-CMD ["./PinterestBot"]
+CMD echo "coming soon"
