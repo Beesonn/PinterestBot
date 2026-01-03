@@ -1,4 +1,4 @@
-module github.com/Mishel-07/PinterestBot
+module github.com/Beesonn/PinterestBot
 
 go 1.24.0
 
