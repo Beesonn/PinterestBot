@@ -4,7 +4,7 @@ import (
     "regexp"
     "strings"
 
-    "github.com/Mishel-07/PinterestBot/settings"
+    "github.com/Beesonn/PinterestBot/settings"
     "github.com/PaulSonOfLars/gotgbot/v2"
     "github.com/PaulSonOfLars/gotgbot/v2/ext"
 )
